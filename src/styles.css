@@ -22,7 +22,7 @@
 }
 
 .container-form{
-    @apply p-6 border border-gray-300 rounded-lg shadow-md shadow-orange-200;
+    @apply p-6 border border-gray-400 bg-gray-200 rounded-lg shadow-md shadow-gray-400;
 }
 
 .player-enter {

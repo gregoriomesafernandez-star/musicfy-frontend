@@ -1,4 +1,4 @@
-# Musicfy
+# Music Management App (Angular)
 
 Frontend application developed with Angular for a music management and playback platform.
 
@@ -6,7 +6,7 @@ The application allows users to manage artists, albums and songs, with JWT authe
 
 ## Backend Repository
 
-[Musicfy Backend](BACKEND_REPOSITORY_URL)
+[Musicfy Backend](https://github.com/gregoriomesafernandez-star/musicfy-backend)
 
 ## Features
 
@@ -21,7 +21,6 @@ The application allows users to manage artists, albums and songs, with JWT authe
 - Music playback
 - Role-based access control
 - Form validation
-- Angular services
 - Responsive design
 - Integration with Node.js REST API
 
@@ -107,28 +106,9 @@ The application uses role-based access control to restrict administrative operat
 
 ## Music Management
 
-Music content is organized using the following structure:
-
-```text
-Artist
-└── Album
-    └── Song
-```
-
 Artists can have multiple albums, and each album can contain multiple songs.
 
 Images and audio files are uploaded through the application and managed by the backend.
-
-## Backend Requirements
-
-The Musicfy backend requires:
-
-- Node.js
-- Express
-- MongoDB
-- JWT authentication
-
-See the backend repository for installation and configuration instructions.
 
 ## Author
 

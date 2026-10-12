@@ -69,6 +69,7 @@
 
           <img
             [src]="artist.image ? 'http://localhost:3000/api/get-image-artist/' + artist.image : 'http://localhost:3000/api/get-image-artist/default.png'"
+            (error)="$any($event.target).src = 'http://localhost:3000/api/get-image-artist/default.png'"
             [alt]="artist.name"
             class="w-40 h-40 rounded-full object-cover"
           >
