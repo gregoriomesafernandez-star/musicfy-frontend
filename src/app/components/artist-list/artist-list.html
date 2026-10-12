@@ -1,0 +1,115 @@
+<div class="relative h-45 overflow-hidden bg-orange-300 rounded-tl-lg rounded-tr-lg -mx-8 -mt-8 mb-8">
+
+    <!-- Degradado para que el texto se lea -->
+    <div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
+
+    <div class="absolute top-12 left-5 text-white">
+        
+        <h1 class="text-4xl sm:text-6xl font-bold mb-2">
+            Artistas
+            <i class="fa-solid fa-star"></i>
+        </h1>
+        
+    </div>
+
+</div>
+
+@if (authService.identity()?.role === 'ROLE_ADMIN') {
+    <a routerLink="/artist/create" class="button-submit">
+        <i class="fa-solid fa-plus"></i>
+        Añadir artista
+    </a>
+}
+
+@if (artists().length === 0) {
+
+    <p class="mt-8 text-gray-500">
+        No existen artistas.
+    </p>
+
+} @else {
+  <!-- PAGINACIÓN -->
+  <div class="mx-auto mt-5 flex justify-center items-center gap-4">
+
+    @if (page() > 1) {
+      <a
+        [routerLink]="['/artists', page() - 1]"
+        class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+    }
+
+    <span class="font-semibold">
+      Página {{ page() }} de {{ pages() }}
+    </span>
+
+    @if (page() < pages()) {
+      <a
+        [routerLink]="['/artists', page() + 1]"
+        class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </a>
+    }
+
+  </div>
+
+  <!-- LISTA DE ARTISTAS -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 mt-8 space-y-4">
+
+    @for (artist of artists(); track artist._id) {
+
+      <div [routerLink]="['/artist/detail', artist._id]" 
+          class="flex flex-col  items-center cursor-pointer bg-gray-100 rounded-lg p-4 
+                hover:shadow-lg hover:shadow-orange-500/30 border-gray-200 transition-all duration-300">
+
+        <!-- Foto + nombre -->
+        <div class="flex flex-col items-center gap-2 mb-3">
+
+          <img
+            [src]="artist.image ? 'http://localhost:3000/api/get-image-artist/' + artist.image : 'http://localhost:3000/api/get-image-artist/default.png'"
+            [alt]="artist.name"
+            class="w-40 h-40 rounded-full object-cover"
+          >
+
+          <h3 class="text-xl font-semibold">
+            {{ artist.name }}
+          </h3>
+
+        </div>
+
+        <!-- Botones -->
+        @if (authService.identity()?.role === 'ROLE_ADMIN') {
+          <div class="flex items-center gap-3">
+
+            <button
+              [routerLink]="['/artist/edit', artist._id]"
+              type="button"
+              class="px-3 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-700 transition-all duration-300"
+            >
+              <i class="fa-solid fa-pen"></i>
+            
+            </button>
+
+            <button
+              (click)="$event.stopPropagation(); onDeleteArtist(artist._id)"
+              type="button"
+              class="px-3 py-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-700 transition-all duration-300"
+            >
+              <i class="fa-solid fa-trash"></i>
+            
+            </button>
+
+          </div>
+        }
+
+      </div>
+
+    }
+
+  </div>
+}
+
+
+

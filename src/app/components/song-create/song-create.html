@@ -1,0 +1,60 @@
+<div class="container-form w-140">
+  
+  @if (success_message()) {
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+      {{ success_message()}}
+    </div>
+  }
+
+  <h2 class="text-2xl font-bold mb-4">
+    {{ title() }}
+  </h2>
+
+  <form #creatForm="ngForm" (ngSubmit)="onCreateSong(creatForm)">
+
+    <div class="mb-4">
+      <label class="label-form">
+        Número
+      </label>
+
+      <input type="text" name="number" [(ngModel)]="number" class="input" placeholder="Introduce numero de cancion" />
+
+    </div>
+
+    <div class="mb-4">
+      <label class="label-form">
+        Titulo
+      </label>
+
+      <input type="text" name="name" [(ngModel)]="name" class="input" placeholder="Introduce nombre de cancion" />
+
+    </div>
+
+    <div class="mb-4">
+      <label class="label-form">
+        Duración
+      </label>
+
+      <input type="text" name="duration" [(ngModel)]="duration" class="input" placeholder="Introduce duracion de cancion" />
+
+    </div>
+
+    <div class="mb-4 text-center">
+        <label class="label-form">
+            Canción del album
+        </label>
+
+        <input type="file" #audioInput name="image" (change)="onAudioSelected($event)" accept="audio/mpeg" class="inline-block bg-gray-500 text-white px-4 py-2 rounded cursor-pointer  hover:bg-gray-600" />
+    </div>
+
+    <button type="submit" class="button-submit">
+      Añadir canción
+    </button>
+
+    <button type="button" class="button-back" (click)="back()">
+      ← Volver
+    </button>
+
+  </form>
+  
+</div>

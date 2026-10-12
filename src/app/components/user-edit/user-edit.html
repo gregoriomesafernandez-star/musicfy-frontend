@@ -1,0 +1,68 @@
+<!-- REGISTRO -->
+<div class="container-form w-120">
+    <h2 class="text-2xl font-bold mb-4">
+    {{ title() }}
+    </h2>
+
+    <form #updateForm="ngForm" (ngSubmit)="onUpdate()">
+
+    @if (success_message()) {
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+        {{ success_message()}}
+        </div>
+    }
+    <div class="mb-4">
+        <label class="label-form">
+        Nombre
+        </label>
+
+        <input type="text" name="name" #nameControl="ngModel" [(ngModel)]="name" class="input" placeholder="Introduce tu nombre" />
+
+    </div>
+
+    <div class="mb-4">
+        <label class="label-form">
+        Apellidos
+        </label>
+
+        <input type="text" name="surname" #surnameControl="ngModel" [(ngModel)]="surname" class="input" placeholder="Introduce tus apellidos" />
+        
+    </div>
+
+    <div class="mb-4">
+        <label class="label-form">
+        Email
+        </label>
+
+        <input type="email" name="registerEmail" #registerEmailControl="ngModel" [(ngModel)]="email" class="input" placeholder="Introduce tu correo" />
+        
+    </div>
+
+    @if (authService.identity()?.image) {
+
+        <div class="mb-6 mt-10">
+            <img
+            [src]="'http://localhost:3000/api/get-image-user/' + authService.identity()?.image"
+            alt="Imagen de perfil"
+            class="w-35 h-35 rounded-full object-cover mx-auto"
+            >
+        </div>
+
+    }
+
+    <div class="mb-6 text-center">
+
+        <input type="file" accept="image/*" (change)="onImageSelected($event)" class="inline-block bg-gray-500 text-white px-4 py-2 rounded cursor-pointer  hover:bg-gray-600"/>
+
+    </div> 
+
+    <button type="submit" class="button-submit">
+        Actualizar
+    </button>
+
+    <button type="button" class="button-back" (click)="back()">
+      ← Volver
+    </button>
+    
+    </form>
+</div>

@@ -1,0 +1,135 @@
+<div class="relative h-80 overflow-hidden rounded-bl-lg rounded-br-lg -mx-8 -mt-8 mb-8">
+
+    <img
+        [src]="image()
+            ? 'http://localhost:3000/api/get-image-album/' + image()
+            : 'http://localhost:3000/api/get-image-album/default.png'"
+        [alt]="title()"
+        class="absolute left-10 top-8 rounded-md w-60 h-60 object-cover"
+    >
+
+    <!-- Degradado para que el texto se lea -->
+    <div class="absolute inset-0 bg-linear-to-t from-black via-black/40 to-transparent"></div>
+
+    <div class="absolute top-1/2 left-75 -translate-y-1/2 text-white">
+        
+        <h1 class="hidden sm:block text-5xl md:text-6xl font-bold mb-2">
+            {{ title()}}
+        </h1>
+
+        <p class="hidden sm:block text-lg mb-2">
+            <i class="fa-solid fa-compact-disc"></i>
+            Album
+        </p>
+
+        <p class="hidden md:block text-lg mt-3 text-gray-200">
+            {{ description()}}
+        </p>
+
+    </div>
+
+</div>
+
+@if (authService.identity()?.role === 'ROLE_ADMIN') {
+    <a [routerLink]="['/song/create', id()]" class="button-submit">
+        <i class="fa-solid fa-plus"></i>
+        Añadir canción
+    </a>
+}
+
+<!-- Mostrar canciones de album -->
+<div class="mt-12">
+
+    <h2 class="text-xl font-bold mb-4">
+        Canciones
+        <i class="fa-solid fa-music"></i>
+    </h2>
+    @if (songs().length === 0) {
+
+        <p class="mt-8 text-gray-500">
+            Este album todavía no tiene canciones.
+        </p>
+
+    } @else {
+        <table class="w-full text-left">
+
+            <thead class="border-b border-gray-300">
+                <tr>
+                    <th class="py-3 px-4 w-20"></th>
+                    <th class="hidden sm:table-cell py-3 px-4">#</th>
+                    <th class="py-3 px-4">Nombre</th>
+                    <th class="py-3 px-4">Duración</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                    @for (song of songs(); track song._id) {
+
+                        <tr class="border-b border-gray-200 hover:bg-gray-100 transition">
+
+                            <!-- Reproducir -->
+                            <td class="py-3 px-4 text-center">
+
+                                <button
+                                    (click)="_playerService.playSong(song)"
+                                    type="button"
+                                    class="text-orange-500 hover:text-orange-700 text-xl cursor-pointer"
+                                >
+                                    <i class="fa-solid fa-circle-play"></i>
+                                </button>
+
+                            </td>
+                            
+                            <!-- Número -->
+                            <td class="hidden sm:table-cell py-3 px-4">
+                                {{ song.number }}
+                            </td>
+
+                            <!-- Nombre -->
+                            <td class="py-3 px-4 font-semibold">
+                                {{ song.name }}
+                            </td>
+
+                            <!-- Duración -->
+                            <td class="py-3 px-4 text-gray-500">
+                                {{ song.duration }}
+                            </td>
+
+                            @if (authService.identity()?.role === 'ROLE_ADMIN'){
+                            <td class="py-3 px-4">
+                                <!-- Botones -->
+                                <div class="flex flex-col gap-2 items-center justify-center md:flex-row md:gap-2">
+
+                                    <button
+                                        [routerLink]="['/song/edit', song._id]"
+                                        type="button"
+                                        class="px-3 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-700 transition-all duration-300"
+                                    >
+                                    <i class="fa-solid fa-pen"></i>
+                                    
+                                    </button>
+
+                                    <button
+                                        (click)="onDeleteSong(song._id)"
+                                        type="button"
+                                        class="px-3 py-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-700 transition-all duration-300"
+                                    >
+                                    <i class="fa-solid fa-trash"></i>
+                                    
+                                    </button>
+
+                                </div>
+                            </td>
+                        }
+
+                        </tr>
+
+                    }
+                
+            </tbody>
+
+        </table>
+    }
+</div>
