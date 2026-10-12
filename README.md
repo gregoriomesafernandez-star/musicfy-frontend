@@ -41,7 +41,7 @@ The application allows users to manage artists, albums and songs, with JWT authe
 Clone the repository:
 
 ```bash
-git clone https://github.com/gregoriomesafarnandez-star/musicfy-frontend.git
+git clone https://github.com/gregoriomesafernandez-star/musicfy-frontend.git
 cd musicfy-frontend
 ```
 
